@@ -1,6 +1,6 @@
 [{
 	"source_connexion": "PG:service=amenagement",
-	"sql": "limites_des_constructions",
+	"sql": "limites_des_constructions.sql",
 	"source_schema": "limites_des_constructions",
 	"destination_schema": "amenagement",
 	"destination_table": "limites_des_constructions"
