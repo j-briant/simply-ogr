@@ -1,5 +1,6 @@
 [{
 	"source_connexion": "PG:service=amenagement",
+	"destination_connexion": "PG:dbname=gc_transfert",
 	"sql": "limites_des_constructions.sql",
 	"source_schema": "limites_des_constructions",
 	"destination_schema": "amenagement",
