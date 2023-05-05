@@ -4,7 +4,7 @@ Utility script for transfering table data from and to ogr formats, and to keep p
 
 ## Configuration
 
-The script is a unique shell file calling a formatted `ogr2ogr` command. The command is piloted by configuration files that indicate the data source, destination, the sql request to be applied, the name of the destination layer and the geometry type.
+The script is a unique shell file calling a formatted `ogr2ogr` command. The command is piloted by configuration files that indicate the data source, destination, the sql request to be applied, the name of the destination layer and the geometry type. Each configuration file will have information for a list of tables to be transfered, sources and destinations can be the same but that's a rule of thumb.
 
 The format is as follow:
 
@@ -27,11 +27,9 @@ The format is as follow:
 
 The tool is thought to be a way of managing multiple data transfers, without intoducing any new logic or complication. In a context where different needs and processes need to cohabitate, it helps to keep a certain order and granularity with the "process-specific" configuration. Capabilities are potentially the same as _ogr_. Basic knowledge of _ogr2ogr_ are necessary to create correctly the configuration files. 
 
-Another table transfer can be added by adding an object to the list following the same rules.
-
 ## Organisation
 
-Keeping things simple and kind of tidy is a big part of the motivation for this. Most data transfers require rather simple "transformations", making `sql` usually sufficient. Combining data from different sources being out of the scope here. The recommanded way of doing is to have a configuration file by "process", the granularity is let to the user to decide.
+Keeping things simple and kind of tidy is a big part of the motivation for this. Most data transfers require rather simple "transformations", making `sql` usually sufficient. Combining data from different sources being out of the scope here. Also, this allows to keep the transfer logic and configuration out of databases (e.g. views), so nothing could by lost by changes on databases that you don't manage (in unstable environments). The recommanded way of organising is to have a configuration file by "process" but the granularity is let to the user to decide. Directories can be as it pleases, as long as paths are correctly 
 
 ## Running
 
