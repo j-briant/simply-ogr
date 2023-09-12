@@ -2,11 +2,10 @@
 
 # TRANSFERT DATA 
 
-usage="$(basename "$0") [-h] [-c CONF] [-w WHERE]
+usage="$(basename "$0") [-h] [-c CONF]
 Move data around in different formats (OGR compatible), using a configuration file to allow multiple instances:
         -h show this help text
-        -c configuration file path
-	-w condition to be passed to filter data"
+        -c configuration file path"
 
 die() {
   printf '%s\n' "$1" >&2
@@ -47,10 +46,17 @@ fi
 
 # Make the transfer
 jq -c '.[]' $configuration | while read i; do
+# If the sql value is empty make the sql option null
+if [ ! $(jq -r '.sql' <<< "$i") ]; then
+	sql_option=
+else
+	sql_option="-sql @$(jq -r '.sql' <<< "$i")"
+fi
+
 echo Transfering $(jq -r '.sql' <<< "$i")...
 su - postgres -c "ogr2ogr -overwrite -preserve_fid -a_srs EPSG:2056 \
-			$(jq -r '.destination_connexion' <<< "$i") $(jq -r '.source_connexion' <<< "$i") \
-			-sql @$(jq -r '.sql' <<< "$i") \
+			'$(jq -r '.destination_connexion' <<< "$i")' '$(jq -r '.source_connexion' <<< "$i")' \
+			$sql_option \
 			-nln $(jq -r '.destination_table' <<< "$i") \
 			-nlt $(jq -r '.geometry_type' <<< "$i")"
 done
