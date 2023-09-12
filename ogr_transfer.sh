@@ -53,10 +53,21 @@ else
 	sql_option="-sql @$(jq -r '.sql' <<< "$i")"
 fi
 
+# Check if LAYER CREATION OPTIONS (lco) are present
+if [ ! "$(jq 'select(.lco != null).lco' <<< "$i")" ]; then
+	lco_option=
+else
+	for o in $(jq -r 'select(.lco != null).lco|.[]' <<< "$i"); do
+		lco_option=$lco_option" -lco $o"
+	done
+fi
+
+echo $lco_option
+
 echo Transfering $(jq -r '.sql' <<< "$i")...
 su - postgres -c "ogr2ogr -overwrite -preserve_fid -a_srs EPSG:2056 \
 			'$(jq -r '.destination_connexion' <<< "$i")' '$(jq -r '.source_connexion' <<< "$i")' \
 			$sql_option \
-			-nln $(jq -r '.destination_table' <<< "$i") \
-			-nlt $(jq -r '.geometry_type' <<< "$i")"
+			-nln '$(jq -r '.destination_table' <<< "$i")' \
+			-nlt '$(jq -r '.geometry_type' <<< "$i")' $lco_option"
 done
