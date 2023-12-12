@@ -1,4 +1,4 @@
-# ogr-transfer
+# simply-ogr
 
 Utility script for transfering table data from and to ogr formats, and to keep processes in place organised and understandable.
 
