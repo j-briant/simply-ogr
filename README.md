@@ -2,6 +2,25 @@
 
 Utility script for transfering table data from and to ogr formats, and to keep processes in place organised and understandable.
 
+## Prerequisites
+
+You'll need a Linux command line with ogr2ogr and jq installed.
+
+```shell
+apt install gdal-bin jq
+```
+
+Check versions:
+
+```shell 
+ogr2ogr --version
+GDAL 3.4.1, released 2021/12/27
+```
+
+```shell 
+jq --version
+jq-1.6
+```
 ## Configuration
 
 The script is a unique shell file calling a formatted `ogr2ogr` command. The command is piloted by configuration files in json list format that indicate the data source, destination, the sql request to be applied, the name of the destination layer, the layer creation options (-lco) and the geometry type. Each configuration file will have information for a list of tables to be transfered.
