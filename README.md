@@ -88,7 +88,7 @@ This is purely a matter of choice, as long as you're happy with it and communica
 Once our configuration file is ready, let's call it `myconf.json`, the transfers can be started with
 
 ```shell
-./ogr_transfer.sh -c myconf.json
+./simply-ogr.sh -c myconf.json
 ```
 
 Where `-c` is the only parameter (with the help `-h`) requiring the path to the desired configuration file.
